@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html;charset=UTF-8" http-equiv="Content-Type">
+    <title>test</title>
+<link rel=stylesheet type="text/css" href="cart_color.css">
+    <script type="text/javascript">
+    alert("測試程式!");
+    </script>
+	<script type="text/javascript">
+	  //模擬檢測帳號、密碼 在這設定帳密
+		if(localStorage.userid!="mas" || sessionStorage.userpwd!="1111"){
+			alert("帳號密碼錯誤,請回首頁登入!!");
+			sessionStorage.removeItem('userpwd');
+			document.location="inter.htm";
+		}
+	function isLoad(){ 
+	    //顯示使用者帳號
+		document.getElementById("showuserid").innerHTML=localStorage.userid;
+		var div_list="";
+		//將商品資訊存在陣列
+		var sale_item=new Array("tst1","tst2","tst3");
+		//顯示商品
+		for (i in sale_item)
+		{	
+		    div_list=div_list+"<div class='fruit'>"
+			div_list=div_list+"<img class='img_fruit' src='images/CG"+i+".png'><br/>"
+			div_list=div_list+"<font style='color:#ff0000'>" + sale_item[i] +"</font><br />"
+			div_list=div_list+"<input type='checkbox' name='chkitem' value='" + sale_item[i] + "'>"
+			div_list=div_list+"我要選購</div>"	
+		}
+		document.getElementById("div_sale").insertAdjacentHTML("beforeend", div_list);
+                
+
+		//檢查Cartlist是否仍有資料，有則載入
+		if(localStorage.Cartlist)
+			shopping_list.value="您的購買清單："+localStorage.Cartlist;
+		else
+			shopping_list.value="您的購買清單：";
+		
+	
+		//建立按鈕的事件偵聽
+		clearButton.addEventListener("click", clearCart);
+		cartButton.addEventListener("click", addtoCart);
+		
+	}
+	/***********清除購物車************/
+	function clearCart(){	
+			shopping_list.value="您的購買清單：";
+			localStorage.removeItem("Cartlist");         /*清空localStorage*/
+	}
+	/***********加入購物車************/
+	function addtoCart(){  
+	var checkselect="";
+	var checkBoxList =document.getElementsByName('chkitem'); 
+	
+		for (i in checkBoxList)
+		{
+		  if(checkBoxList[i].checked)   
+		  {   
+			checkselect=checkselect+"\n"+checkBoxList[i].value;
+		  }   
+
+		}	
+/*localStorage.Cartlist是空的，表示首次新增，就把勾選商品存入localStorage.Cartlist；
+如果localStorage.Cartlist有值，表示已經新增過商品，新勾選商品繼續存入localStorage.Cartlist*/
+		if(!localStorage.Cartlist)
+			localStorage.Cartlist=checkselect;
+		else
+			localStorage.Cartlist=localStorage.Cartlist+checkselect;
+
+		shopping_list.value="您的購買清單："+localStorage.Cartlist;
+	}
+	//登出
+	function logout(){
+	localStorage.removeItem('userid');
+	sessionStorage.clear();
+	document.location='inter.htm';
+	}
+	</script>
+	</head>
+<body onload="isLoad()">
+		<div id="main">
+		
+		  <header> tst6 <input type="button" value="登出" onclick="logout();"></header>	  
+		  <span id="showuserid">aaa</span> 您好<br />請選擇!<br />
+		   <button id="clearButton">清除購物車</button><br>
+		   <button id="cartButton">放入購物車</button>
+		   <textarea id="shopping_list" rows="15" cols="30"></textarea>
+	           <div id="div_sale"></div> 
+		</div>	
+		<footer>
+		8:30~20:30<br />
+		01487@gmail.com<br />
+		
+		</footer>   
+	</body>
+</html>
+<html>
+<body>
+<h3>TST1</h3>
+<form method="post" action="" enctype="text/plain">
+
+<fieldset>
+<legend>TST2</legend>
+<!--影片
+<iframe src="https://drive.google.com/file/d/1SUOP2nlKue5cE3kLpDhyvx0J8Ok9wQi6/preview" frameborder="0" width="640" height="360"></iframe>
+-->
+<ol>
+        <li>
+	TEST1：<input type="text" name="subject" autofocus/>	
+	</li>
+        <li>
+	TEST2：<input type="text" name="teacher" />
+	</li>
+        <li>
+        TEST3：<input type="radio" name="sex" value="ON" checked />ON 
+	<input type="radio" name="sex" value="OFF" />OFF
+	</li>
+        <li>
+	TEST4：<input type="date" name="startdate" />	
+	</li>
+</ol>
+</fieldset>
+<fieldset>
+<legend>TST5</legend>
+<!--圖片
+<img src="https://drive.google.com/uc?
+export=view&id=150u6hJECzU-rtU_Wh4wiZWoJMmIFYQly">
+-->
+<ol>
+	<li>
+        這是中文
+        <input type="checkbox" name="reason" value="必修" />其他原因 
+	<input type="checkbox" name="reason" value="pp" />qq 
+	<input type="checkbox" name="reason" value="zz" />個人興趣 
+	<input type="checkbox" name="reason" value="其他" />zz
+	</li>
+        <li>
+	test123
+	<input type="radio" name="assist" value="沒有缺課" />adfa&nbsp;
+	<input type="radio" name="assist" value="缺課1-3次" />1-3次&nbsp; 
+	<input type="radio" name="assist" value="4-" />4-6次&nbsp;
+	<input type="radio" name="assist" value="afdr" />534
+	</li>
+	<li>
+	teest 
+	<input type="radio" name="attitude" value="很認真" />很認真&nbsp; 
+	<input type="radio" name="attitude" value="bu" />5662&nbsp; 
+	<input type="radio" name="attitude" value="很" />trgfd
+	</li>
+        <li>
+	49字心得： <br />
+	<textarea rows="3" name="hope" cols="50"></textarea>		
+	</li>
+</ol>
+</fieldset>
+        <input type="submit" value="送出" />
+        <input type="reset" value="重寫" />
+</form>
+        <select id="randomNum">
+	<option value="10">1~10</option>
+	<option value="50">1~50</option>
+	<option value="100">1~100</option>
+	<option value="200">1~200</option>
+	<option value="1000">1~1000</option>
+        </select>
+
+</body>
+<button onclick="goRandom()">Go</button>
+結果：<span id="randomResult"></span>
+<script>
+//設置亂數規則
+function getRandomInt(max) {
+	return Math.floor(Math.random() * max);
+}
+
+var l = 0; //宣告紀錄值
+
+//當按下按鈕時
+function goRandom() {
+	//取得使用者選擇的數字範圍
+	randomNum = document.getElementById("randomNum").value;
+	//取得該數字範圍的亂數
+	r = getRandomInt(randomNum)+1;
+
+	//判斷是否重複
+	switch(true){
+		case r==l: //如果亂數值等於紀錄值
+		goRandom(); //重新取亂數
+		break;
+		default: //如果亂數值不等於紀錄值
+		l = r; //更新紀錄值
+		break;
+	}
+
+	//回傳到 HTML 該亂數值
+	document.getElementById("randomResult").innerHTML= r;
+}
+</script>
+
+<div id="current_date">
+    <script>
+        date = new Date();
+        year = date.getFullYear();
+        month = date.getMonth() + 1;
+        day = date.getDate();
+        hour = date.getHours();
+        min = date.getMinutes();
+        sec = date.getSeconds();
+        minsec =date.getMilliseconds();
+        document.getElementById("current_date").innerHTML = min + ":" + sec + "-" + minsec;
+    </script>
+</div>
+
+<fieldset>
+<legend>選取檔案</legend>
+<input type="file" onchange="loadFile(this.files[0])">
+    <br>
+    <pre id="output"></pre>
+    <script>
+      async function loadFile(file) {
+        let text = await file.text();
+        document.getElementById('output').textContent = text;
+      }
+</fieldset>
